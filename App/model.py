@@ -36,10 +36,47 @@ los mismos.
 """
 
 # Construccion de modelos
+def newCatalog():
+    """
+    Inicializa el catálogo de las obras. Crea una lista vacia para guardar
+    todos los obras, adicionalmente, crea una lista vacia para los artistas.
+    """
+    catalog = {'artworks': None,
+               'artists': None}
+
+    catalog['artworks'] = lt.newList()
+    catalog['artists'] = lt.newList()
+
+    return catalog
 
 # Funciones para agregar informacion al catalogo
+def addArtworks(catalog, artworks):
+    lt.addLast(catalog['artworks'], artworks)
+    artists = artworks['artists'].split(",")
+    
+    for artists in artists:
+        addArtworksArtist(catalog, artists.strip(), artworks)
+
+
+def addArtworksArtist(catalog, artistsname, artworks):
+    
+    artists = catalog['artists']
+    posartists = lt.isPresent(artists, artistsname)
+    if posartists > 0:
+        artists = lt.getElement(artists, posartists)
+    else:
+        artists = newartist(artistsname)
+        lt.addLast(artists, artists)
+    lt.addLast(artists['artworks'], artworks)
 
 # Funciones para creacion de datos
+def newartist(name):
+    
+    artists = {'name': "", "artworks": None}
+    artists['name'] = name
+    artists['artworks'] = lt.newList('ARRAY_LIST')
+    return artists
+
 
 # Funciones de consulta
 
